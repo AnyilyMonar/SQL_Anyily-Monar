@@ -26,3 +26,106 @@ Esta base de datos facilita el manejo de inventario inmobiliario, la trazabilida
 | ---------- | ------------ | -------- | --- | --------------- |
 | estado\_id | INT          | ✅        | PK  | AUTO\_INCREMENT |
 | nombre     | VARCHAR(100) | ✅        |     |                 |
+
+### Tabla 2. Ciudad
+| Campo                   | Tipo de Dato | NOT NULL | Key | Otros           |
+| ----------------------- | ------------ | -------- | --- | --------------- |
+| ciudad\_id              | INT          | ✅        | PK  | AUTO\_INCREMENT |
+| nombre                  | VARCHAR(100) | ✅        |     |                 |
+| estado\_id              | INT          | ✅        | FK  |                 |
+| codigo\_postal\_prefijo | VARCHAR(10)  |          |     |                 |
+
+### Tabla 3. Sucursal
+| Campo        | Tipo de Dato | NOT NULL | Key | Otros               |
+| ------------ | ------------ | -------- | --- | ------------------- |
+| sucursal\_id | INT          | ✅        | PK  | AUTO\_INCREMENT     |
+| nombre       | VARCHAR(100) | ✅        |     |                     |
+| direccion    | VARCHAR(150) | ✅        |     |                     |
+| ciudad\_id   | INT          | ✅        | FK  |                     |
+| telefono     | VARCHAR(15)  | ✅        |     |                     |
+| email        | VARCHAR(100) | ✅        |     |                     |
+| gerente\_id  | INT          |          | FK  | referencia a agente |
+
+### Tabla 4. Agente
+| Campo                  | Tipo de Dato | NOT NULL | Key | Otros           |
+| ---------------------- | ------------ | -------- | --- | --------------- |
+| agente\_id             | INT          | ✅        | PK  | AUTO\_INCREMENT |
+| nombre                 | VARCHAR(50)  | ✅        |     |                 |
+| apellido               | VARCHAR(50)  | ✅        |     |                 |
+| telefono               | VARCHAR(15)  | ✅        |     |                 |
+| email                  | VARCHAR(100) | ✅        |     |                 |
+| fecha\_contratacion    | DATE         | ✅        |     |                 |
+| sucursal\_id           | INT          | ✅        | FK  |                 |
+| licencia\_inmobiliaria | VARCHAR(50)  |          |     |                 |
+| especializacion        | VARCHAR(100) |          |     |                 |
+
+### Tabla 5. Tipo_Propiedad
+| Campo               | Tipo de Dato | NOT NULL | Key | Otros           |
+| ------------------- | ------------ | -------- | --- | --------------- |
+| tipo\_propiedad\_id | INT          | ✅        | PK  | AUTO\_INCREMENT |
+| nombre              | VARCHAR(50)  | ✅        |     |                 |
+| descripcion         | VARCHAR(150) |          |     |                 |
+
+### Tabla 6. Estatus_Propiedad
+| Campo       | Tipo de Dato | NOT NULL | Key | Otros           |
+| ----------- | ------------ | -------- | --- | --------------- |
+| estatus\_id | INT          | ✅        | PK  | AUTO\_INCREMENT |
+| nombre      | VARCHAR(50)  | ✅        |     |                 |
+| descripcion | VARCHAR(100) |          |     |                 |
+
+### Tabla 7. Propietario
+| Campo                | Tipo de Dato | NOT NULL | Key | Otros             |
+| -------------------- | ------------ | -------- | --- | ----------------- |
+| propietario\_id      | INT          | ✅        | PK  | AUTO\_INCREMENT   |
+| nombre               | VARCHAR(50)  | ✅        |     |                   |
+| apellido             | VARCHAR(50)  | ✅        |     |                   |
+| telefono             | VARCHAR(15)  | ✅        |     |                   |
+| email                | VARCHAR(100) | ✅        |     |                   |
+| direccion            | VARCHAR(150) |          |     |                   |
+| documento\_identidad | VARCHAR(50)  | ✅        |     |                   |
+| tipo                 | VARCHAR(20)  | ✅        |     | Persona o Empresa |
+
+### Tabla 8. Cliente
+| Campo           | Tipo de Dato  | NOT NULL | Key | Otros                     |
+| --------------- | ------------- | -------- | --- | ------------------------- |
+| cliente\_id     | INT           | ✅        | PK  | AUTO\_INCREMENT           |
+| nombre          | VARCHAR(50)   | ✅        |     |                           |
+| apellido        | VARCHAR(50)   | ✅        |     |                           |
+| telefono        | VARCHAR(15)   | ✅        |     |                           |
+| email           | VARCHAR(100)  | ✅        |     |                           |
+| tipo            | VARCHAR(20)   | ✅        |     | Comprador/Inquilino/Ambos |
+| presupuesto     | DECIMAL(12,2) |          |     |                           |
+| preferencias    | TEXT          |          |     |                           |
+| fecha\_registro | DATE          | ✅        |     |                           |
+
+### Tabla 9. Propiedad
+| Campo                       | Tipo de Dato  | NOT NULL | Key | Otros           |
+| --------------------------- | ------------- | -------- | --- | --------------- |
+| propiedad\_id               | INT           | ✅        | PK  | AUTO\_INCREMENT |
+| direccion                   | VARCHAR(150)  | ✅        |     |                 |
+| ciudad\_id                  | INT           | ✅        | FK  |                 |
+| codigo\_postal              | VARCHAR(10)   |          |     |                 |
+| superficie                  | DECIMAL(10,2) | ✅        |     | m²              |
+| habitaciones                | INT           | ✅        |     |                 |
+| baños                       | INT           | ✅        |     |                 |
+| año\_construccion           | INT           | ✅        |     |                 |
+| descripcion                 | TEXT          |          |     |                 |
+| precio                      | DECIMAL(15,2) | ✅        |     |                 |
+| tipo\_propiedad\_id         | INT           | ✅        | FK  |                 |
+| estatus\_id                 | INT           | ✅        | FK  |                 |
+| fecha\_listado              | DATE          | ✅        |     |                 |
+| agente\_id                  | INT           | ✅        | FK  |                 |
+| propietario\_id             | INT           | ✅        | FK  |                 |
+| caracteristicas\_especiales | TEXT          |          |     |                 |
+
+### Tabla 10. Contrato
+| Campo            | Tipo de Dato  | NOT NULL | Key | Otros                         |
+| ---------------- | ------------- | -------- | --- | ----------------------------- |
+| contrato\_id     | INT           | ✅        | PK  | AUTO\_INCREMENT               |
+| cliente\_id      | INT           | ✅        | FK  |                               |
+| propiedad\_id    | INT           | ✅        | FK  |                               |
+| tipo\_contrato   | VARCHAR(20)   | ✅        |     | Venta/Arriendo                |
+| fecha\_inicio    | DATE          | ✅        |     |                               |
+| fecha\_fin       | DATE          |          |     | Solo arriendos                |
+| valor            | DECIMAL(15,2) | ✅        |     |                               |
+| estado\_contrato | VARCHAR(30)   | ✅        |     | Activo, Finalizado, Cancelado |
